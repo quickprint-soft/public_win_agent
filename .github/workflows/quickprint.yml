@@ -34,7 +34,8 @@ jobs:
       - name: Clone quickprint-admin
         run: |
           git clone https://oauth2:${{ secrets.MYUSER_TOKEN  }}@github.com/quickprint-soft/quick-print-admin.git
-          git clone https://oauth2:${{ secrets.GITEE_TOKEN  }}@gitee.com:charlesabc/myutils.git
+          git clone https://oauth2:${{ secrets.GITEE_TOKEN  }}@gitee.com/xhp_1/myutils.git
+
 
       # - name: Clone myutils repository from Gitee with trace
       #   run: |
