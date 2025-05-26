@@ -38,6 +38,7 @@ jobs:
           cd ./quick-print-admin/myutils
           git branch
           git log
+          find . ./quick-print-admin/myutils -name "publish_web.sh"
 
 
       # - name: Clone myutils repository from Gitee with trace
