@@ -1,6 +1,9 @@
 name: CI
 
 on:
+  repository_dispatch:
+      types:
+        - quick-print-admin
   push:
     branches: [ '*' ]
   pull_request:
