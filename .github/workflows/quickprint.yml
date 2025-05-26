@@ -91,7 +91,7 @@ jobs:
 
       - name: Generate git commit
         run: |
-           bash ./quick-print-admin/myutils/quickprint/scripts/build_web.sh .JENKINS.env
+           bash $WORK_ROOT_DIR/myutils/quickprint/scripts/build_web.sh .JENKINS.env
         working-directory: ./quick-print-admin
 
       # - name: Build test
