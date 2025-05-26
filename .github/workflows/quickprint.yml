@@ -89,19 +89,19 @@ jobs:
           cat .JENKINS.env
         working-directory: ./quick-print-admin
 
-  #     - name: Generate git commit
-  #       run: |
-  #          bash $WORK_ROOT_DIR/myutils/quickprint/scripts/build_web.sh .JENKINS.env
-  #       working-directory: ${{WORK_ROOT_DIR}}
+      - name: Generate git commit
+        run: |
+           bash $WORK_ROOT_DIR/myutils/quickprint/scripts/build_web.sh .JENKINS.env
+        working-directory: ${{WORK_ROOT_DIR}}
 
-  #     # - name: Build test
-  #     #   run: |
-  #     #     npm install
-  #     #     npm run build
-  #     #   working-directory: ./quick-print-admin/web
+      # - name: Build test
+      #   run: |
+      #     npm install
+      #     npm run build
+      #   working-directory: ./quick-print-admin/web
 
-  #     # - name: Setup Debug Session
-  #     #   uses: csexton/debugger-action@master
+      # - name: Setup Debug Session
+      #   uses: csexton/debugger-action@master
         
   #     - name: publish web
   #       run: |
