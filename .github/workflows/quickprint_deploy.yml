@@ -5,8 +5,8 @@ on:
   repository_dispatch:
     types:
       - quick-print-admin-deploy
-  push:
-    branches: [ '*' ]
+  # push:
+  #   branches: [ '*' ]
   pull_request:
   release:
     types: [ created, edited ]
