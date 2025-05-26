@@ -204,3 +204,14 @@ jobs:
         run: |
           bash ./quick-print-admin/myutils/quickprint/scripts/publish_server.sh $WORK_ROOT_DIR/.JENKINS.env
 
+
+
+  call-second-workflow:
+      uses: ./.github/workflows/quickprint_deploy.yml
+      needs: 
+      - init
+      - backend
+      - frontend
+      with:
+        param1: value1
+        param2: value2
