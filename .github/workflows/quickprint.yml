@@ -51,15 +51,17 @@ jobs:
 
           
 
-      - name: Build test
-        run: |
-          npm install
-          npm run build
-        working-directory: ./quick-print-admin/web
+      # - name: Build test
+      #   run: |
+      #     npm install
+      #     npm run build
+      #   working-directory: ./quick-print-admin/web
 
 
       - name: publish web
         run: |
+          find . -name "publish_web.sh"
+          echo "================="
           bash ./quick-print-admin/myutils/quickprint/publish_web.sh
 
   backend:
@@ -98,6 +100,10 @@ jobs:
         run: |
           go build -v -race
         working-directory: ./quick-print-admin/server
+
+      - name: publish server
+        run: |
+          bash ./quick-print-admin/myutils/quickprint/publish_server.sh
 
   devops-test:
     if: github.ref == 'refs/heads/test'
