@@ -130,7 +130,7 @@ jobs:
   backend:
     if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'release' || github.event_name == 'repository_dispatch'
     name: Backend go
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     strategy:
       matrix:
         go-version: [1.22]
@@ -175,18 +175,24 @@ jobs:
 
       - name: Download dependencies
         run: |
-          go get -v -t -d ./...
-          if [ -f Gopkg.toml ]; then
-              curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-              dep ensure
-          fi
-        working-directory: ./quick-print-admin/server
+          make build-server-local
+        working-directory: ./quick-print-admin
 
-      - name: Test and Build
-        run: |
-          go build -v -race
-          mv server quickprintserver && tar zcvf quickprintserver.tar.gz quickprintserver ./config.yaml ./resource 
-        working-directory: ./quick-print-admin/server
+      # - name: Download dependencies
+      #   run: |
+      #     go get -v -t -d ./...
+      #     if [ -f Gopkg.toml ]; then
+      #         curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+      #         dep ensure
+      #     fi
+      #   working-directory: ./quick-print-admin/server
+
+      # - name: Test and Build
+      #   run: |
+      #     go build -v -race
+      #     make 
+      #     mv server quickprintserver && tar zcvf quickprintserver.tar.gz quickprintserver ./config.yaml ./resource 
+      #   working-directory: ./quick-print-admin/
 
 
 
