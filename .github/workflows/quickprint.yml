@@ -153,8 +153,6 @@ jobs:
 
 
 
-      # - name: Setup Debug Session
-      #   uses: csexton/debugger-action@master
 
       - name: Get current branch name
         id: get_branch
