@@ -1,9 +1,6 @@
 name: CI
 
 on:
-  repository_dispatch:
-      types:
-        - quick-print-admin
   push:
     branches: [ '*' ]
   pull_request:
@@ -18,7 +15,6 @@ env:
 # game
   DEFAULT_DDING_SECRET: 'SEC618a0dffd91ebf7db4c9c00e2a82b863bc6181858cadbdbf1655ca6dcd2fd1cc'
   DEFAULT_DDING_TOKEN: '4e27925ce9df0372171763c071b36bb442cdbf296f315484b9cb165f331da225'
-  NODE_VERSION: '18.16.0'
 jobs:
   init:
     if: github.repository_owner == 'quickprint-soft'
@@ -31,12 +27,12 @@ jobs:
 
 
   frontend:
-    if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'release'
-    name: Frontend node env.NODE_VERSION # ${{ matrix.node-version }}
+    if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'release'  || github.event_name == 'repository_dispatch'
+    name: Frontend node ${{ matrix.node-version }}
     runs-on: ubuntu-latest
-    # strategy:
-    #   matrix:
-    #     node-version: [18.16.0]
+    strategy:
+      matrix:
+        node-version: [18.16.0]
     steps:
       - name: Check out branch
         uses: actions/checkout@v2
@@ -68,10 +64,10 @@ jobs:
       #     # git clone https://oauth2:${{ secrets.MYUSER_TOKEN }}@${{ github.event.client_payload.gitaddress }}
           
           
-      - name: Use Node.js 
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: ${{ matrix.node-version }}
 
 
       - name: Get current branch name
@@ -91,12 +87,11 @@ jobs:
           echo "export WORK_ROOT_DIR=$WORK_ROOT_DIR" >> $WORK_ROOT_DIR/.JENKINS.env
           
           cat $WORK_ROOT_DIR/.JENKINS.env
-  #       working-directory: ./quick-print-admin
+        working-directory: ./quick-print-admin
 
       - name: Generate git commit
         run: |
            bash $WORK_ROOT_DIR/myutils/quickprint/scripts/build_web.sh $WORK_ROOT_DIR/.JENKINS.env
-
 
   #     # - name: Build test
   #     #   run: |
@@ -107,14 +102,14 @@ jobs:
   #     # - name: Setup Debug Session
   #     #   uses: csexton/debugger-action@master
         
-      - name: publish web
-        run: |
-          echo ${{ env.branch_name }} 
-          echo "export BRANCH=${{ env.branch_name }} " >> .JENKINS.env
-          find . -name "publish_web.sh"
-          echo "================="
-          cat .JENKINS.env
-          bash $WORK_ROOT_DIR/myutils/quickprint/scripts/publish_web.sh .JENKINS.env
+  #     - name: publish web
+  #       run: |
+  #         echo ${{ env.branch_name }} 
+  #         echo "export BRANCH=${{ env.branch_name }} " >> .JENKINS.env
+  #         find . -name "publish_web.sh"
+  #         echo "================="
+  #         cat .JENKINS.env
+  #         bash $WORK_ROOT_DIR/myutils/quickprint/scripts/publish_web.sh .JENKINS.env
   #       working-directory: ${{WORK_ROOT_DIR}}
 
   # backend:
