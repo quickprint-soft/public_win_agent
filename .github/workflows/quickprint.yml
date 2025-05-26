@@ -150,20 +150,7 @@ jobs:
           git clone https://oauth2:${{ secrets.MYUSER_TOKEN  }}@github.com/quickprint-soft/quick-print-admin.git ./quick-print-admin
           git clone https://oauth2:${{ secrets.GITEE_TOKEN  }}@gitee.com/charlesabc/myutils.git ./quick-print-admin/myutils
           
-      - name: Download dependencies
-        run: |
-          go get -v -t -d ./...
-          if [ -f Gopkg.toml ]; then
-              curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-              dep ensure
-          fi
-        working-directory: ./quick-print-admin/server
 
-      - name: Test and Build
-        run: |
-          go build -v -race
-          mv server quickprintserver && tar zcvf quickprintserver.tar.gz quickprintserver ./config.yaml ./resource 
-        working-directory: ./quick-print-admin/server
 
 
       # - name: Setup Debug Session
@@ -186,6 +173,25 @@ jobs:
           echo "export WORK_ROOT_DIR=$WORK_ROOT_DIR" >> $WORK_ROOT_DIR/.JENKINS.env
           cat $WORK_ROOT_DIR/.JENKINS.env
         working-directory: ./quick-print-admin
+
+
+      - name: Download dependencies
+        run: |
+          go get -v -t -d ./...
+          if [ -f Gopkg.toml ]; then
+              curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+              dep ensure
+          fi
+        working-directory: ./quick-print-admin/server
+
+      - name: Test and Build
+        run: |
+          go build -v -race
+          mv server quickprintserver && tar zcvf quickprintserver.tar.gz quickprintserver ./config.yaml ./resource 
+        working-directory: ./quick-print-admin/server
+
+
+        
 
       - name: Set SSH
         env:
