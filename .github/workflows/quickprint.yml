@@ -101,8 +101,7 @@ jobs:
   #     #     npm run build
   #     #   working-directory: ./quick-print-admin/web
 
-  #     # - name: Setup Debug Session
-  #     #   uses: csexton/debugger-action@master
+
         
       - name: Set SSH
         env:
@@ -114,6 +113,9 @@ jobs:
         run: |
           mkdir -p ~/.ssh/ && echo "$KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+      - name: Setup Debug Session
+        uses: csexton/debugger-action@master
 
       - name: publish web
         run: |
