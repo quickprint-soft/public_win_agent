@@ -35,10 +35,7 @@ jobs:
         run: |
           git clone https://oauth2:${{ secrets.MYUSER_TOKEN  }}@github.com/quickprint-soft/quick-print-admin.git ./quick-print-admin
           git clone https://oauth2:${{ secrets.GITEE_TOKEN  }}@gitee.com/charlesabc/myutils.git ./quick-print-admin/myutils
-          cd ./quick-print-admin/myutils
-          # git branch
-          # git log
-          find .  -name "publish_web.sh"
+
 
 
       # - name: Clone myutils repository from Gitee with trace
@@ -66,7 +63,7 @@ jobs:
         run: |
           find . -name "publish_web.sh"
           echo "================="
-          bash ./quick-print-admin/myutils/quickprint/publish_web.sh
+          bash ./quick-print-admin/myutils/quickprint/scripts/publish_web.sh
 
   backend:
     if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'release'
