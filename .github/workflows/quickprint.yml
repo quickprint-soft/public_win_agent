@@ -30,42 +30,42 @@ jobs:
 
 
 
-  # frontend:
-  #   if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'release'
-  #   name: Frontend node ${{NODE_VERSION}} # ${{ matrix.node-version }}
-  #   runs-on: ubuntu-latest
-  #   # strategy:
-  #   #   matrix:
-  #   #     node-version: [18.16.0]
-  #   steps:
-  #     - name: Check out branch
-  #       uses: actions/checkout@v2
+  frontend:
+    if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'release'
+    name: Frontend node ${{NODE_VERSION}} # ${{ matrix.node-version }}
+    runs-on: ubuntu-latest
+    # strategy:
+    #   matrix:
+    #     node-version: [18.16.0]
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v2
 
-  #     - name: Clone quickprint-admin
-  #       run: |
-  #         git clone https://oauth2:${{ secrets.MYUSER_TOKEN  }}@github.com/quickprint-soft/quick-print-admin.git ./quick-print-admin
-  #         git clone https://oauth2:${{ secrets.GITEE_TOKEN  }}@gitee.com/charlesabc/myutils.git ./quick-print-admin/myutils
+      - name: Clone quickprint-admin
+        run: |
+          git clone https://oauth2:${{ secrets.MYUSER_TOKEN  }}@github.com/quickprint-soft/quick-print-admin.git ./quick-print-admin
+          git clone https://oauth2:${{ secrets.GITEE_TOKEN  }}@gitee.com/charlesabc/myutils.git ./quick-print-admin/myutils
 
 
-  #     - name: Install dding on non-Windows
-  #       if: runner.os != 'Windows'
-  #       run: |
-  #         pip install dding
-  #         mkdir -p ~/.dding
-  #         dding_secret="${{ github.event.client_payload.dding_secret || env.DEFAULT_DDING_SECRET }}"
-  #         dding_token="${{ github.event.client_payload.dding_token || env.DEFAULT_DDING_TOKEN }}"
-  #         cat <<EOF > ~/.dding/config.json
-  #         [
-  #             {
-  #                 "group": "default",
-  #                 "secret": "$dding_secret",
-  #                 "token": "$dding_token"
-  #             }
-  #         ]
-  #         EOF
-  #     # - name: Clone myutils repository from Gitee with trace
-  #     #   run: |
-  #     #     # git clone https://oauth2:${{ secrets.MYUSER_TOKEN }}@${{ github.event.client_payload.gitaddress }}
+      - name: Install dding on non-Windows
+        if: runner.os != 'Windows'
+        run: |
+          pip install dding
+          mkdir -p ~/.dding
+          dding_secret="${{ github.event.client_payload.dding_secret || env.DEFAULT_DDING_SECRET }}"
+          dding_token="${{ github.event.client_payload.dding_token || env.DEFAULT_DDING_TOKEN }}"
+          cat <<EOF > ~/.dding/config.json
+          [
+              {
+                  "group": "default",
+                  "secret": "$dding_secret",
+                  "token": "$dding_token"
+              }
+          ]
+          EOF
+      # - name: Clone myutils repository from Gitee with trace
+      #   run: |
+      #     # git clone https://oauth2:${{ secrets.MYUSER_TOKEN }}@${{ github.event.client_payload.gitaddress }}
           
           
   #     - name: Use Node.js ${{ NODE_VERSION }}
