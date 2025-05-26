@@ -86,12 +86,12 @@ jobs:
           echo "export UTILS_DIR=$UTILS_DIR" >> $WORK_ROOT_DIR/.JENKINS.env
           echo "export WORK_ROOT_DIR=$WORK_ROOT_DIR" >> $WORK_ROOT_DIR/.JENKINS.env
           
-          cat .JENKINS.env
+          cat $WORK_ROOT_DIR/.JENKINS.env
         working-directory: ./quick-print-admin
 
       - name: Generate git commit
         run: |
-           bash $WORK_ROOT_DIR/myutils/quickprint/scripts/build_web.sh .JENKINS.env
+           bash $WORK_ROOT_DIR/myutils/quickprint/scripts/build_web.sh $WORK_ROOT_DIR/.JENKINS.env
         working-directory: $WORK_ROOT_DIR
 
   #     # - name: Build test
