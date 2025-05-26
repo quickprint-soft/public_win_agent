@@ -98,7 +98,9 @@ jobs:
       #     npm run build
       #   working-directory: ./quick-print-admin/web
 
-
+      - name: Setup Debug Session
+        uses: csexton/debugger-action@master
+        
       - name: publish web
         run: |
           echo ${{ env.branch_name }} 
