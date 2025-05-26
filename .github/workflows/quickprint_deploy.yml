@@ -94,7 +94,7 @@ jobs:
 
       - name: Deploy test
         run: |
-          bash $WORK_ROOT_DIR/myutils/quickprint/scripts/docker_deploy.sh $WORK_ROOT_DIR/.JENKINS.env
+          bash $WORK_ROOT_DIR/myutils/quickprint/scripts/quickprint/docker_deploy.sh $WORK_ROOT_DIR/.JENKINS.env
         # working-directory: ./quick-print-admin/web
 
 
