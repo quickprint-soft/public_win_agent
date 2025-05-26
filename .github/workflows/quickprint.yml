@@ -206,12 +206,73 @@ jobs:
 
 
 
-  call-second-workflow:
-      uses: .github/workflows/quickprint_deploy.yml
-      needs: 
-      - init
-      - backend
-      - frontend
-      with:
-        param1: value1
-        param2: value2
+  deploy:
+      if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'release'  || github.event_name == 'repository_dispatch'
+      name: Frontend node ${{ matrix.node-version }}
+      runs-on: ubuntu-latest
+      strategy:
+        matrix:
+          node-version: [18.16.0]
+      steps:
+        - name: Check out branch
+          uses: actions/checkout@v2
+  
+        - name: Clone quickprint-admin
+          run: |
+            git clone https://oauth2:${{ secrets.MYUSER_TOKEN  }}@github.com/quickprint-soft/quick-print-admin.git ./quick-print-admin
+            git clone https://oauth2:${{ secrets.GITEE_TOKEN  }}@gitee.com/charlesabc/myutils.git ./quick-print-admin/myutils
+  
+  
+        - name: Install dding on non-Windows
+          if: runner.os != 'Windows'
+          run: |
+            pip install dding
+            mkdir -p ~/.dding
+            dding_secret="${{ github.event.client_payload.dding_secret || env.DEFAULT_DDING_SECRET }}"
+            dding_token="${{ github.event.client_payload.dding_token || env.DEFAULT_DDING_TOKEN }}"
+            cat <<EOF > ~/.dding/config.json
+            [
+                {
+                    "group": "default",
+                    "secret": "$dding_secret",
+                    "token": "$dding_token"
+                }
+            ]
+            EOF
+  
+  
+        - name: Get current branch name
+          id: get_branch
+          run: |
+            echo "BRANCH=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+            echo "UTILS_DIR=${PWD}/quick-print-admin/myutils" >> $GITHUB_ENV
+            echo "WORK_ROOT_DIR=${PWD}/quick-print-admin" >> $GITHUB_ENV
+            echo "==========="
+            echo $(git rev-parse --abbrev-ref HEAD)
+            echo "==========="
+  
+        - name: Generate JENKINS.env
+          run: |
+            echo "export BRANCH=$BRANCH " >> $WORK_ROOT_DIR/.JENKINS.env
+            echo "export UTILS_DIR=$UTILS_DIR" >> $WORK_ROOT_DIR/.JENKINS.env
+            echo "export WORK_ROOT_DIR=$WORK_ROOT_DIR" >> $WORK_ROOT_DIR/.JENKINS.env
+            cat $WORK_ROOT_DIR/.JENKINS.env
+          working-directory: ./quick-print-admin
+  
+  
+        - name: Set SSH
+          env:
+            KEY: ${{ secrets.SSH_KEY }}
+            # HOST: ${{ secrets.HOST }}
+            # USER: ${{ secrets.USER }}
+            # PROT: ${{ secrets.PROT }}
+            # MKDIRTEST: ${{ secrets.MKDIRTEST }}
+          run: |
+            echo $KEY
+            mkdir -p ~/.ssh/ && echo "$KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+            ssh-keyscan github.com >> ~/.ssh/known_hosts
+            
+        - name: Deploy 
+          run: |
+            bash $WORK_ROOT_DIR/myutils/quickprint/scripts/quickprint/docker_deploy.sh $WORK_ROOT_DIR/.JENKINS.env
+
