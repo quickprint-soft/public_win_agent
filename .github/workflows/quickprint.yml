@@ -51,7 +51,11 @@ jobs:
 
       - name: Get current branch name
         id: get_branch
-        run: echo "BRANCH=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+        run: |
+          echo "BRANCH=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+          echo "==========="
+          echo $(git rev-parse --abbrev-ref HEAD)
+          echo "==========="
 
       - name: Generate git commit
         run: |
