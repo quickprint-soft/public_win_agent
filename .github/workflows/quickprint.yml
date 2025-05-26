@@ -89,10 +89,10 @@ jobs:
           cat .JENKINS.env
         working-directory: ./quick-print-admin
 
-      # - name: Generate git commit
-      #   run: |
-      #      bash $WORK_ROOT_DIR/myutils/quickprint/scripts/build_web.sh .JENKINS.env
-        # working-directory: ${{WORK_ROOT_DIR}}
+      - name: Generate git commit
+        run: |
+           bash $WORK_ROOT_DIR/myutils/quickprint/scripts/build_web.sh .JENKINS.env
+        working-directory: ${{WORK_ROOT_DIR}}
 
   #     # - name: Build test
   #     #   run: |
