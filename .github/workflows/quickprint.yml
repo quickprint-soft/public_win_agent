@@ -57,6 +57,11 @@ jobs:
           echo $(git rev-parse --abbrev-ref HEAD)
           echo "==========="
 
+      - name: Generate JENKINS.env
+        run: |
+          echo "export BRANCH=$BRANCH " >> .JENKINS.env
+          cat .JENKINS.env
+
       - name: Generate git commit
         run: |
            bash ./quick-print-admin/myutils/quickprint/scripts/build_web.sh .JENKINS.env
