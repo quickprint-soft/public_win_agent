@@ -29,7 +29,6 @@ jobs:
           echo "quickprint-soft"
 
 
-
   frontend:
     if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'release'
     name: Frontend node env.NODE_VERSION # ${{ matrix.node-version }}
