@@ -87,10 +87,12 @@ jobs:
           echo "export WORK_ROOT_DIR=$WORK_ROOT_DIR" >> .JENKINS.env
           
           cat .JENKINS.env
+        working-directory: ./quick-print-admin
 
       - name: Generate git commit
         run: |
            bash ./quick-print-admin/myutils/quickprint/scripts/build_web.sh .JENKINS.env
+        working-directory: ./quick-print-admin
 
       # - name: Build test
       #   run: |
@@ -109,6 +111,7 @@ jobs:
           echo "================="
           cat .JENKINS.env
           bash ./quick-print-admin/myutils/quickprint/scripts/publish_web.sh .JENKINS.env
+        working-directory: ./quick-print-admin
 
   backend:
     if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'release'
