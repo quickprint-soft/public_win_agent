@@ -15,6 +15,7 @@ env:
 # game
   DEFAULT_DDING_SECRET: 'SEC618a0dffd91ebf7db4c9c00e2a82b863bc6181858cadbdbf1655ca6dcd2fd1cc'
   DEFAULT_DDING_TOKEN: '4e27925ce9df0372171763c071b36bb442cdbf296f315484b9cb165f331da225'
+  NODE_VERSION: '18.16.0'
 jobs:
   init:
     if: github.repository_owner == 'quickprint-soft'
@@ -28,11 +29,11 @@ jobs:
 
   frontend:
     if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'release'
-    name: Frontend node ${{ matrix.node-version }}
+    name: Frontend node ${{NODE_VERSION}} # ${{ matrix.node-version }}
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18.16.0]
+    # strategy:
+    #   matrix:
+    #     node-version: [18.16.0]
     steps:
       - name: Check out branch
         uses: actions/checkout@v2
@@ -64,10 +65,10 @@ jobs:
       #     # git clone https://oauth2:${{ secrets.MYUSER_TOKEN }}@${{ github.event.client_payload.gitaddress }}
           
           
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ NODE_VERSION }}
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
 
 
       - name: Get current branch name
