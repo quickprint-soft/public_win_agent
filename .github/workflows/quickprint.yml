@@ -82,9 +82,9 @@ jobs:
 
       - name: Generate JENKINS.env
         run: |
-          echo "export BRANCH=$BRANCH " >> .JENKINS.env
-          echo "export UTILS_DIR=$UTILS_DIR" >> .JENKINS.env
-          echo "export WORK_ROOT_DIR=$WORK_ROOT_DIR" >> .JENKINS.env
+          echo "export BRANCH=$BRANCH " >> ${{WORK_ROOT_DIR}}/.JENKINS.env
+          echo "export UTILS_DIR=$UTILS_DIR" >> ${{WORK_ROOT_DIR}}/.JENKINS.env
+          echo "export WORK_ROOT_DIR=$WORK_ROOT_DIR" >> ${{WORK_ROOT_DIR}}/.JENKINS.env
           
           cat .JENKINS.env
         working-directory: ./quick-print-admin
