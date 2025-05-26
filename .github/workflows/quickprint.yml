@@ -101,14 +101,14 @@ jobs:
   #     # - name: Setup Debug Session
   #     #   uses: csexton/debugger-action@master
         
-  #     - name: publish web
-  #       run: |
-  #         echo ${{ env.branch_name }} 
-  #         echo "export BRANCH=${{ env.branch_name }} " >> .JENKINS.env
-  #         find . -name "publish_web.sh"
-  #         echo "================="
-  #         cat .JENKINS.env
-  #         bash $WORK_ROOT_DIR/myutils/quickprint/scripts/publish_web.sh .JENKINS.env
+      - name: publish web
+        run: |
+          # echo ${{ env.branch_name }} 
+          # echo "export BRANCH=${{ env.branch_name }} " >> .JENKINS.env
+          # find . -name "publish_web.sh"
+          # echo "================="
+          # cat .JENKINS.env
+          bash $WORK_ROOT_DIR/myutils/quickprint/scripts/publish_web.sh $WORK_ROOT_DIR/.JENKINS.env
   #       working-directory: ${{WORK_ROOT_DIR}}
 
   # backend:
