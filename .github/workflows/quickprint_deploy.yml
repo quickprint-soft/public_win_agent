@@ -61,15 +61,6 @@ jobs:
               }
           ]
           EOF
-      # - name: Clone myutils repository from Gitee with trace
-      #   run: |
-      #     # git clone https://oauth2:${{ secrets.MYUSER_TOKEN }}@${{ github.event.client_payload.gitaddress }}
-          
-          
-      # - name: Use Node.js ${{ matrix.node-version }}
-      #   uses: actions/setup-node@v1
-      #   with:
-      #     node-version: ${{ matrix.node-version }}
 
 
       - name: Get current branch name
@@ -103,26 +94,9 @@ jobs:
           mkdir -p ~/.ssh/ && echo "$KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           
-      - name: Deploy test
+      - name: Deploy 
         run: |
           bash $WORK_ROOT_DIR/myutils/quickprint/scripts/quickprint/docker_deploy.sh $WORK_ROOT_DIR/.JENKINS.env
-        # working-directory: ./quick-print-admin/web
 
 
         
-
-
-  #     # - name: Setup Debug Session
-  #     #   uses: csexton/debugger-action@master
-
-  #     - name: publish web
-  #       run: |
-  #         # echo ${{ env.branch_name }} 
-  #         # echo "export BRANCH=${{ env.branch_name }} " >> .JENKINS.env
-  #         # find . -name "publish_web.sh"
-  #         # echo "================="
-  #         # cat .JENKINS.env
-  #         bash $WORK_ROOT_DIR/myutils/quickprint/scripts/publish_web.sh $WORK_ROOT_DIR/.JENKINS.env
-  # #       working-directory: ${{WORK_ROOT_DIR}}
-
-  
