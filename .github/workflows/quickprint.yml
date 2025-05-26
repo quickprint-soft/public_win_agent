@@ -37,6 +37,7 @@ jobs:
           git clone https://oauth2:${{ secrets.GITEE_TOKEN  }}@gitee.com/charlesabc/myutils.git ./quick-print-admin/myutils
           cd ./quick-print-admin/myutils
           git branch
+          git log
 
 
       # - name: Clone myutils repository from Gitee with trace
