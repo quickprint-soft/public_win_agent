@@ -74,23 +74,23 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
 
-  #     - name: Get current branch name
-  #       id: get_branch
-  #       run: |
-  #         echo "BRANCH=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
-  #         echo "UTILS_DIR=${PWD}/quick-print-admin/myutils" >> $GITHUB_ENV
-  #         echo "WORK_ROOT_DIR=${PWD}/quick-print-admin" >> $GITHUB_ENV
-  #         echo "==========="
-  #         echo $(git rev-parse --abbrev-ref HEAD)
-  #         echo "==========="
+      - name: Get current branch name
+        id: get_branch
+        run: |
+          echo "BRANCH=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+          echo "UTILS_DIR=${PWD}/quick-print-admin/myutils" >> $GITHUB_ENV
+          echo "WORK_ROOT_DIR=${PWD}/quick-print-admin" >> $GITHUB_ENV
+          echo "==========="
+          echo $(git rev-parse --abbrev-ref HEAD)
+          echo "==========="
 
-  #     - name: Generate JENKINS.env
-  #       run: |
-  #         echo "export BRANCH=$BRANCH " >> $WORK_ROOT_DIR/.JENKINS.env
-  #         echo "export UTILS_DIR=$UTILS_DIR" >> $WORK_ROOT_DIR/.JENKINS.env
-  #         echo "export WORK_ROOT_DIR=$WORK_ROOT_DIR" >> $WORK_ROOT_DIR/.JENKINS.env
+      - name: Generate JENKINS.env
+        run: |
+          echo "export BRANCH=$BRANCH " >> $WORK_ROOT_DIR/.JENKINS.env
+          echo "export UTILS_DIR=$UTILS_DIR" >> $WORK_ROOT_DIR/.JENKINS.env
+          echo "export WORK_ROOT_DIR=$WORK_ROOT_DIR" >> $WORK_ROOT_DIR/.JENKINS.env
           
-  #         cat $WORK_ROOT_DIR/.JENKINS.env
+          cat $WORK_ROOT_DIR/.JENKINS.env
   #       working-directory: ./quick-print-admin
 
   #     - name: Generate git commit
