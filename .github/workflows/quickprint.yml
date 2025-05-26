@@ -92,7 +92,7 @@ jobs:
       - name: Generate git commit
         run: |
            bash $WORK_ROOT_DIR/myutils/quickprint/scripts/build_web.sh .JENKINS.env
-        working-directory: ./quick-print-admin
+        working-directory: ${{WORK_ROOT_DIR}}
 
       # - name: Build test
       #   run: |
@@ -100,8 +100,8 @@ jobs:
       #     npm run build
       #   working-directory: ./quick-print-admin/web
 
-      - name: Setup Debug Session
-        uses: csexton/debugger-action@master
+      # - name: Setup Debug Session
+      #   uses: csexton/debugger-action@master
         
       - name: publish web
         run: |
@@ -111,7 +111,7 @@ jobs:
           echo "================="
           cat .JENKINS.env
           bash $WORK_ROOT_DIR/myutils/quickprint/scripts/publish_web.sh .JENKINS.env
-        working-directory: ./quick-print-admin
+        working-directory: ${{WORK_ROOT_DIR}}
 
   backend:
     if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'release'
