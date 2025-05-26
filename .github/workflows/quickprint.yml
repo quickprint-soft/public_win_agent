@@ -95,11 +95,11 @@ jobs:
         run: |
            bash $WORK_ROOT_DIR/myutils/quickprint/scripts/build_web.sh $WORK_ROOT_DIR/.JENKINS.env
 
-  #     # - name: Build test
-  #     #   run: |
-  #     #     npm install
-  #     #     npm run build
-  #     #   working-directory: ./quick-print-admin/web
+      - name: Build test
+        run: |
+          npm install
+          npm run build
+        working-directory: ./quick-print-admin/web
 
 
         
@@ -115,8 +115,8 @@ jobs:
           mkdir -p ~/.ssh/ && echo "$KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-      - name: Setup Debug Session
-        uses: csexton/debugger-action@master
+      # - name: Setup Debug Session
+      #   uses: csexton/debugger-action@master
 
       - name: publish web
         run: |
@@ -128,46 +128,46 @@ jobs:
           bash $WORK_ROOT_DIR/myutils/quickprint/scripts/publish_web.sh $WORK_ROOT_DIR/.JENKINS.env
   #       working-directory: ${{WORK_ROOT_DIR}}
 
-  # backend:
-  #   if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'release'
-  #   name: Backend go
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       go-version: [1.22]
-  #   steps:
-  #     - name: Set up Go ${{ matrix.go-version }}
-  #       uses: actions/setup-go@v1
-  #       with:
-  #         go-version: ${{ matrix.go-version }}
-  #       id: go
+  backend:
+    if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'release' || github.event_name == 'repository_dispatch'
+    name: Backend go
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go-version: [1.22]
+    steps:
+      - name: Set up Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{ matrix.go-version }}
+        id: go
 
-  #     - name: Check out branch
-  #       uses: actions/checkout@v2
+      - name: Check out branch
+        uses: actions/checkout@v2
 
 
-  #     - name: Clone quickprint-admin
-  #       run: |
-  #         git clone https://oauth2:${{ secrets.MYUSER_TOKEN  }}@github.com/quickprint-soft/quick-print-admin.git ./quick-print-admin
-  #         git clone https://oauth2:${{ secrets.GITEE_TOKEN  }}@gitee.com/charlesabc/myutils.git ./quick-print-admin/myutils
+      - name: Clone quickprint-admin
+        run: |
+          git clone https://oauth2:${{ secrets.MYUSER_TOKEN  }}@github.com/quickprint-soft/quick-print-admin.git ./quick-print-admin
+          git clone https://oauth2:${{ secrets.GITEE_TOKEN  }}@gitee.com/charlesabc/myutils.git ./quick-print-admin/myutils
           
-  #     - name: Download dependencies
-  #       run: |
-  #         go get -v -t -d ./...
-  #         if [ -f Gopkg.toml ]; then
-  #             curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-  #             dep ensure
-  #         fi
-  #       working-directory: ./quick-print-admin/server
+      - name: Download dependencies
+        run: |
+          go get -v -t -d ./...
+          if [ -f Gopkg.toml ]; then
+              curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+              dep ensure
+          fi
+        working-directory: ./quick-print-admin/server
 
-  #     - name: Test and Build
-  #       run: |
-  #         go build -v -race
-  #       working-directory: ./quick-print-admin/server
+      - name: Test and Build
+        run: |
+          go build -v -race
+        working-directory: ./quick-print-admin/server
 
-  #     - name: publish server
-  #       run: |
-  #         bash ./quick-print-admin/myutils/quickprint/scripts/publish_server.sh
+      - name: publish server
+        run: |
+          bash ./quick-print-admin/myutils/quickprint/scripts/publish_server.sh $WORK_ROOT_DIR/.JENKINS.env
 
   # devops-test:
   #   if: github.ref == 'refs/heads/test'
