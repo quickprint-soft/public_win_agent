@@ -162,7 +162,7 @@ jobs:
       - name: Test and Build
         run: |
           go build -v -race
-          mv server quickprintserver && tar zcvf quickprintserver.tar.gz quickprintserver ./config.yaml ./resource ./scripts
+          mv server quickprintserver && tar zcvf quickprintserver.tar.gz quickprintserver ./config.yaml ./resource 
         working-directory: ./quick-print-admin/server
 
 
