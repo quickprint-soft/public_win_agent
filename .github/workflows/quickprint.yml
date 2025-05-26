@@ -55,6 +55,7 @@ jobs:
         run: |
           echo "BRANCH=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
           echo "UTILS_DIR=${PWD}/quick-print-admin/myutils" >> $GITHUB_ENV
+          echo "WORK_ROOT_DIR=${PWD}/quick-print-admin" >> $GITHUB_ENV
           echo "==========="
           echo $(git rev-parse --abbrev-ref HEAD)
           echo "==========="
@@ -63,6 +64,7 @@ jobs:
         run: |
           echo "export BRANCH=$BRANCH " >> .JENKINS.env
           echo "export UTILS_DIR=$UTILS_DIR" >> .JENKINS.env
+          echo "export WORK_ROOT_DIR=$WORK_ROOT_DIR" >> .JENKINS.env
           
           cat .JENKINS.env
 
