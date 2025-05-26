@@ -207,7 +207,7 @@ jobs:
 
 
   call-second-workflow:
-      uses: ./.github/workflows/quickprint_deploy.yml
+      uses: .github/workflows/quickprint_deploy.yml
       needs: 
       - init
       - backend
