@@ -191,7 +191,7 @@ jobs:
         working-directory: ./quick-print-admin/server
 
 
-        
+
 
       - name: Set SSH
         env:
@@ -214,6 +214,10 @@ jobs:
         run: |
           bash ./quick-print-admin/myutils/quickprint/scripts/publish_server.sh $WORK_ROOT_DIR/.JENKINS.env
 
+
+      - name: Setup Debug Session
+        uses: csexton/debugger-action@master
+      
   # devops-test:
   #   if: github.ref == 'refs/heads/test'
   #   name: devops-test
