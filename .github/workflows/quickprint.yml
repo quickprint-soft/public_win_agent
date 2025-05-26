@@ -182,7 +182,18 @@ jobs:
           cat $WORK_ROOT_DIR/.JENKINS.env
         working-directory: ./quick-print-admin
 
-        
+      - name: Set SSH
+        env:
+          KEY: ${{ secrets.SSH_KEY }}
+          # HOST: ${{ secrets.HOST }}
+          # USER: ${{ secrets.USER }}
+          # PROT: ${{ secrets.PROT }}
+          # MKDIRTEST: ${{ secrets.MKDIRTEST }}
+        run: |
+          echo $KEY
+          mkdir -p ~/.ssh/ && echo "$KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          
       - name: publish server
         run: |
           bash ./quick-print-admin/myutils/quickprint/scripts/publish_server.sh $WORK_ROOT_DIR/.JENKINS.env
