@@ -66,10 +66,10 @@ jobs:
       #     # git clone https://oauth2:${{ secrets.MYUSER_TOKEN }}@${{ github.event.client_payload.gitaddress }}
           
           
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
+      # - name: Use Node.js ${{ matrix.node-version }}
+      #   uses: actions/setup-node@v1
+      #   with:
+      #     node-version: ${{ matrix.node-version }}
 
 
       - name: Get current branch name
@@ -91,7 +91,18 @@ jobs:
         working-directory: ./quick-print-admin
 
 
-
+      - name: Set SSH
+        env:
+          KEY: ${{ secrets.SSH_KEY }}
+          # HOST: ${{ secrets.HOST }}
+          # USER: ${{ secrets.USER }}
+          # PROT: ${{ secrets.PROT }}
+          # MKDIRTEST: ${{ secrets.MKDIRTEST }}
+        run: |
+          echo $KEY
+          mkdir -p ~/.ssh/ && echo "$KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          
       - name: Deploy test
         run: |
           bash $WORK_ROOT_DIR/myutils/quickprint/scripts/quickprint/docker_deploy.sh $WORK_ROOT_DIR/.JENKINS.env
@@ -99,17 +110,7 @@ jobs:
 
 
         
-  #     - name: Set SSH
-  #       env:
-  #         KEY: ${{ secrets.SSH_KEY }}
-  #         # HOST: ${{ secrets.HOST }}
-  #         # USER: ${{ secrets.USER }}
-  #         # PROT: ${{ secrets.PROT }}
-  #         # MKDIRTEST: ${{ secrets.MKDIRTEST }}
-  #       run: |
-  #         echo $KEY
-  #         mkdir -p ~/.ssh/ && echo "$KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
-  #         ssh-keyscan github.com >> ~/.ssh/known_hosts
+
 
   #     # - name: Setup Debug Session
   #     #   uses: csexton/debugger-action@master
