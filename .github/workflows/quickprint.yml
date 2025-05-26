@@ -101,6 +101,17 @@ jobs:
   #     # - name: Setup Debug Session
   #     #   uses: csexton/debugger-action@master
         
+      - name: Set SSH
+        env:
+          KEY: ${{ secrets.KEY }}
+          # HOST: ${{ secrets.HOST }}
+          # USER: ${{ secrets.USER }}
+          # PROT: ${{ secrets.PROT }}
+          MKDIRTEST: ${{ secrets.MKDIRTEST }}
+        run: |
+          mkdir -p ~/.ssh/ && echo "$KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
       - name: publish web
         run: |
           # echo ${{ env.branch_name }} 
