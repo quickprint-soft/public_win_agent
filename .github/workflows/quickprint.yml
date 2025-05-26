@@ -68,10 +68,10 @@ jobs:
       #     # git clone https://oauth2:${{ secrets.MYUSER_TOKEN }}@${{ github.event.client_payload.gitaddress }}
           
           
-  #     - name: Use Node.js ${{ NODE_VERSION }}
-  #       uses: actions/setup-node@v1
-  #       with:
-  #         node-version: ${{ env.NODE_VERSION }}
+      - name: Use Node.js 
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ env.NODE_VERSION }}
 
 
   #     - name: Get current branch name
