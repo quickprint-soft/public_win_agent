@@ -20,6 +20,7 @@ jobs:
       - name: init
         run: |
           echo "quickprint-soft"
+          
   frontend:
     if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'release'
     name: Frontend node ${{ matrix.node-version }}
@@ -53,6 +54,7 @@ jobs:
         id: get_branch
         run: |
           echo "BRANCH=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+          echo "UTILS_DIR=${WPD}/quick-print-admin/myutils" >> $GITHUB_ENV
           echo "==========="
           echo $(git rev-parse --abbrev-ref HEAD)
           echo "==========="
@@ -60,6 +62,8 @@ jobs:
       - name: Generate JENKINS.env
         run: |
           echo "export BRANCH=$BRANCH " >> .JENKINS.env
+          echo "export UTILS_DIR=$UTILS_DIR" >> .JENKINS.env
+          
           cat .JENKINS.env
 
       - name: Generate git commit
