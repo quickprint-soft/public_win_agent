@@ -32,7 +32,7 @@ jobs:
 
   frontend:
     if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'release'
-    name: Frontend node ${{ env.NODE_VERSION }} # ${{ matrix.node-version }}
+    name: Frontend node env.NODE_VERSION # ${{ matrix.node-version }}
     runs-on: ubuntu-latest
     # strategy:
     #   matrix:
