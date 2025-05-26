@@ -110,7 +110,7 @@ jobs:
           find . -name "publish_web.sh"
           echo "================="
           cat .JENKINS.env
-          bash ./quick-print-admin/myutils/quickprint/scripts/publish_web.sh .JENKINS.env
+          bash $WORK_ROOT_DIR/myutils/quickprint/scripts/publish_web.sh .JENKINS.env
         working-directory: ./quick-print-admin
 
   backend:
