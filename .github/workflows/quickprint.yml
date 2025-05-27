@@ -286,7 +286,7 @@ jobs:
             $repoName = $env:GITHUB_REPOSITORY.Split('/')[-1]
             
             Write-Host "Workflow succeeded for $repoName!"
-            dding "github action success :) for ${{ github.event.client_payload.gitaddress }}"
+            dding "github action success :) for quickprint"
           
 
         - name: Check Status
@@ -295,4 +295,4 @@ jobs:
           run: |
             $repoName = $env:GITHUB_REPOSITORY.Split('/')[-1]
             Write-Host "Workflow failed for $repoName!"
-            dding "github action fail :( ${{ github.event.client_payload.gitaddress }}"
+            dding "github action fail :( quickprint"
