@@ -133,30 +133,35 @@ jobs:
 
 
 
+      - name: Ls 
+        run: |
+          ls  quick-print/test-prj/lib64
+          ls  quick-print/test-prj/librel64
+          
 
 
-      - name: Build with MSBuild
-        run: msbuild -m -t:Build -p:Configuration=${{ matrix.configuration }} /p:Platform=${{ matrix.platform }} quick-print/build/quick-print.sln
+      # - name: Build with MSBuild
+      #   run: msbuild -m -t:Build -p:Configuration=${{ matrix.configuration }} /p:Platform=${{ matrix.platform }} quick-print/build/quick-print.sln
 
 
    
 
-      - name: Check Status
-        if: ${{ success() }}
-        shell: pwsh
-        run: |
-          $repoName = $env:GITHUB_REPOSITORY.Split('/')[-1]
-          Write-Host "Workflow succeeded for $repoName!"
-          dding "github action success :) for $repoName"
+      # - name: Check Status
+      #   if: ${{ success() }}
+      #   shell: pwsh
+      #   run: |
+      #     $repoName = $env:GITHUB_REPOSITORY.Split('/')[-1]
+      #     Write-Host "Workflow succeeded for $repoName!"
+      #     dding "github action success :) for $repoName"
           
 
-      - name: Check Status
-        if: ${{ failure() }}
-        shell: pwsh
-        run: |
-          $repoName = $env:GITHUB_REPOSITORY.Split('/')[-1]
-          Write-Host "Workflow failed for $repoName!"
-          dding "github action fail :( $repoName"
+      # - name: Check Status
+      #   if: ${{ failure() }}
+      #   shell: pwsh
+      #   run: |
+      #     $repoName = $env:GITHUB_REPOSITORY.Split('/')[-1]
+      #     Write-Host "Workflow failed for $repoName!"
+      #     dding "github action fail :( $repoName"
 
       - name: Ls dir
         run: |
