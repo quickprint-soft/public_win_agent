@@ -112,7 +112,14 @@ jobs:
           pip install -r requirements.txt
           python download.py --arch x64 --build_types dbg --mul
           python download.py --arch x64 --build_types rel --mul
-          
+
+      - name: Fetch test data
+        run: |
+         cd quick-print/test-prj
+         git clone https://github.com/quickprint-soft/quick-print-test-data.git testData
+         cd testData
+         git lfs pull
+         
       - name: CMake
         shell: cmd
         run: |
@@ -122,10 +129,7 @@ jobs:
           cd quick-print\test-prj\build
           cmake ../ -G "Visual Studio 16 2019" -A x64 
           cd ..
-          git clone https://github.com/quickprint-soft/quick-print-test-data.git testData
-          cd testData
-          git lfs pull
-          cd ..
+          
           cmake --build . --target copy_opencv_dlls --config Debug
           cmake --build . --target gtest --config Debug
 
