@@ -122,7 +122,10 @@ jobs:
           cd quick-print\test-prj\build
           cmake ../ -G "Visual Studio 16 2019" -A x64 
           cd ..
-          pulltestdata.bat
+          git clone https://github.com/quickprint-soft/quick-print-test-data.git testData
+          cd testData
+          git lfs pull
+          cd ..
           cmake --build . --target copy_opencv_dlls --config Debug
           cmake --build . --target gtest --config Debug
 
