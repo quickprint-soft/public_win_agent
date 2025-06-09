@@ -110,7 +110,7 @@ jobs:
           set PYTHONIOENCODING=utf-8
           cd quick-print/tools/external_lib
           pip install -r requirements.txt
-          python download.py --arch x64 --build_types dbg --mul
+          # python download.py --arch x64 --build_types dbg --mul
           python download.py --arch x64 --build_types rel --mul
 
       - name: Fetch test data
@@ -130,19 +130,19 @@ jobs:
           cmake ../ -G "Visual Studio 16 2019" -A x64 
           
           
-          cmake --build . --target copy_opencv_dlls --config Debug
-          cmake --build . --target gtest --config Debug
+          cmake --build . --target copy_opencv_dlls --config Release
+          cmake --build . --target gtest --config Release
 
 
 
       - name: Ls 
         run: |
-          ls  quick-print/test-prj/lib64
+          ls  quick-print/test-prj/librel64
 
       - name: test 
         shell: cmd
         run: |
-          cd quick-print/test-prj/lib64
+          cd quick-print/test-prj/librel64
           .\gtest.exe
 
 
