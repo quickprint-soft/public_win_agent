@@ -128,7 +128,7 @@ jobs:
           mkdir quick-print\test-prj\build
           cd quick-print\test-prj\build
           cmake ../ -G "Visual Studio 16 2019" -A x64 
-          cd ..
+          
           
           cmake --build . --target copy_opencv_dlls --config Debug
           cmake --build . --target gtest --config Debug
