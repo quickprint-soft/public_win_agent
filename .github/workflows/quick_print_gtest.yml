@@ -118,8 +118,8 @@ jobs:
         run: |
           pwd
           dir 
-          mkdir quick-print/test-prj/build
-          cd quick-print/test-prj/build
+          mkdir quick-print\test-prj\build
+          cd quick-print\test-prj\build
           cmake ../ -G "Visual Studio 16 2019" -A x64 
           cd ..
           pulltestdata.bat
