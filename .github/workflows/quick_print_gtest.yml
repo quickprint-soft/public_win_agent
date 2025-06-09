@@ -133,17 +133,11 @@ jobs:
           cmake --build . --target copy_opencv_dlls --config Debug
           cmake --build . --target gtest --config Debug
 
-          # cmake --build . --target copy_opencv_dlls --config Release
-          # cmake --build . --target gtest --config Release
-
-         
-
 
 
       - name: Ls 
         run: |
           ls  quick-print/test-prj/lib64
-          # ls  quick-print/test-prj/librel64
 
       - name: test 
         shell: cmd
