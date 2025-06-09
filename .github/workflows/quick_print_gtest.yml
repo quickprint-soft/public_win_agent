@@ -45,46 +45,46 @@ jobs:
         run: |
           echo "Client payload: ${{ toJson(github.event.client_payload) }}"
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.8'
+      # - name: Set up Python
+      #   uses: actions/setup-python@v2
+      #   with:
+      #     python-version: '3.8'
 
-      - name: Install dding on non-Windows
-        if: runner.os != 'Windows'
-        run: |
-          pip install dding
-          mkdir -p ~/.dding
-          dding_secret="${{ github.event.client_payload.dding_secret || env.DEFAULT_DDING_SECRET }}"
-          dding_token="${{ github.event.client_payload.dding_token || env.DEFAULT_DDING_TOKEN }}"
-          cat <<EOF > ~/.dding/config.json
-          [
-              {
-                  "group": "default",
-                  "secret": "$dding_secret",
-                  "token": "$dding_token"
-              }
-          ]
-          EOF
+      # - name: Install dding on non-Windows
+      #   if: runner.os != 'Windows'
+      #   run: |
+      #     pip install dding
+      #     mkdir -p ~/.dding
+      #     dding_secret="${{ github.event.client_payload.dding_secret || env.DEFAULT_DDING_SECRET }}"
+      #     dding_token="${{ github.event.client_payload.dding_token || env.DEFAULT_DDING_TOKEN }}"
+      #     cat <<EOF > ~/.dding/config.json
+      #     [
+      #         {
+      #             "group": "default",
+      #             "secret": "$dding_secret",
+      #             "token": "$dding_token"
+      #         }
+      #     ]
+      #     EOF
       
-      - name: Install dding on Windows
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          pip install dding
-          New-Item -Path $HOME\.dding -ItemType Directory -Force
-          $dding_secret = "${{ github.event.client_payload.dding_secret || env.DEFAULT_DDING_SECRET }}"
-          $dding_token = "${{ github.event.client_payload.dding_token || env.DEFAULT_DDING_TOKEN }}"
-          $config = @"
-          [
-              {
-                  "group": "default",
-                  "secret": "$dding_secret",
-                  "token": "$dding_token"
-              }
-          ]
-          "@
-          $config | Out-File -FilePath $HOME\.dding\config.json -Encoding utf8
+      # - name: Install dding on Windows
+      #   if: runner.os == 'Windows'
+      #   shell: pwsh
+      #   run: |
+      #     pip install dding
+      #     New-Item -Path $HOME\.dding -ItemType Directory -Force
+      #     $dding_secret = "${{ github.event.client_payload.dding_secret || env.DEFAULT_DDING_SECRET }}"
+      #     $dding_token = "${{ github.event.client_payload.dding_token || env.DEFAULT_DDING_TOKEN }}"
+      #     $config = @"
+      #     [
+      #         {
+      #             "group": "default",
+      #             "secret": "$dding_secret",
+      #             "token": "$dding_token"
+      #         }
+      #     ]
+      #     "@
+      #     $config | Out-File -FilePath $HOME\.dding\config.json -Encoding utf8
 
 
       # - name: Set up proxy
@@ -114,7 +114,7 @@ jobs:
           python download.py --arch x64 --build_types rel --mul
           
       - name: CMake
-        shell: powershell
+        shell: cmd
         run: |
           pwd
           dir 
@@ -122,16 +122,16 @@ jobs:
           cd quick-print/test-prj/build
           cmake ../ -G "Visual Studio 16 2019" -A x64 
           cd ..
+          pulltestdata.bat
           cmake --build . --target copy_opencv_dlls --config Debug
           cmake --build . --target gtest --config Debug
 
           cmake --build . --target copy_opencv_dlls --config Release
           cmake --build . --target gtest --config Release
 
-          # run CMake (additional options like -DCMAKE_EXPORT_COMPILE_COMMANDS=TRUE are possible)
-          # it is recommended to specify the compiler version used for the build
-          # cmake -S . -B cbuild/ -DCRASHPAD_BUILD_EXAMPLES=TRUE -DCMAKE_CXX_COMPILER=cl.exe -DCMAKE_C_COMPILER=cl.exe -DCMAKE_BUILD_TYPE=Release
-          # cmake --build cbuild/ --config Release -- /p:Configuration=Release
+         
+
+
 
 
 
