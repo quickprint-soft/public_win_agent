@@ -45,10 +45,10 @@ jobs:
         run: |
           echo "Client payload: ${{ toJson(github.event.client_payload) }}"
 
-      # - name: Set up Python
-      #   uses: actions/setup-python@v2
-      #   with:
-      #     python-version: '3.8'
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
 
       # - name: Install dding on non-Windows
       #   if: runner.os != 'Windows'
@@ -67,29 +67,25 @@ jobs:
       #     ]
       #     EOF
       
-      # - name: Install dding on Windows
-      #   if: runner.os == 'Windows'
-      #   shell: pwsh
-      #   run: |
-      #     pip install dding
-      #     New-Item -Path $HOME\.dding -ItemType Directory -Force
-      #     $dding_secret = "${{ github.event.client_payload.dding_secret || env.DEFAULT_DDING_SECRET }}"
-      #     $dding_token = "${{ github.event.client_payload.dding_token || env.DEFAULT_DDING_TOKEN }}"
-      #     $config = @"
-      #     [
-      #         {
-      #             "group": "default",
-      #             "secret": "$dding_secret",
-      #             "token": "$dding_token"
-      #         }
-      #     ]
-      #     "@
-      #     $config | Out-File -FilePath $HOME\.dding\config.json -Encoding utf8
+      - name: Install dding on Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          pip install dding
+          New-Item -Path $HOME\.dding -ItemType Directory -Force
+          $dding_secret = "${{ github.event.client_payload.dding_secret || env.DEFAULT_DDING_SECRET }}"
+          $dding_token = "${{ github.event.client_payload.dding_token || env.DEFAULT_DDING_TOKEN }}"
+          $config = @"
+          [
+              {
+                  "group": "default",
+                  "secret": "$dding_secret",
+                  "token": "$dding_token"
+              }
+          ]
+          "@
+          $config | Out-File -FilePath $HOME\.dding\config.json -Encoding utf8
 
-
-      # - name: Set up proxy
-      #   run: |
-      #     git config --global http.proxy socks5://python:psdemo982@123.60.164.114:11654
 
 
       - name: Clone repository from Gitee with trace
@@ -146,28 +142,24 @@ jobs:
           .\gtest.exe
 
 
-      # - name: Build with MSBuild
-      #   run: msbuild -m -t:Build -p:Configuration=${{ matrix.configuration }} /p:Platform=${{ matrix.platform }} quick-print/build/quick-print.sln
+  
 
-
-   
-
-      # - name: Check Status
-      #   if: ${{ success() }}
-      #   shell: pwsh
-      #   run: |
-      #     $repoName = $env:GITHUB_REPOSITORY.Split('/')[-1]
-      #     Write-Host "Workflow succeeded for $repoName!"
-      #     dding "github action success :) for $repoName"
+      - name: Check Status
+        if: ${{ success() }}
+        shell: pwsh
+        run: |
+          $repoName = $env:GITHUB_REPOSITORY.Split('/')[-1]
+          Write-Host "Workflow succeeded for $repoName!"
+          dding "github action gtest success :) for $repoName"
           
 
-      # - name: Check Status
-      #   if: ${{ failure() }}
-      #   shell: pwsh
-      #   run: |
-      #     $repoName = $env:GITHUB_REPOSITORY.Split('/')[-1]
-      #     Write-Host "Workflow failed for $repoName!"
-      #     dding "github action fail :( $repoName"
+      - name: Check Status
+        if: ${{ failure() }}
+        shell: pwsh
+        run: |
+          $repoName = $env:GITHUB_REPOSITORY.Split('/')[-1]
+          Write-Host "Workflow failed for $repoName!"
+          dding "github action gtest fail :( $repoName"
 
       - name: Ls dir
         run: |
