@@ -137,7 +137,12 @@ jobs:
         run: |
           ls  quick-print/test-prj/lib64
           ls  quick-print/test-prj/librel64
-          
+
+      - name: test 
+        shell: cmd
+        run: |
+          cd quick-print/test-prj/librel64
+          .\gtest.exe
 
 
       # - name: Build with MSBuild
