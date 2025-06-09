@@ -150,7 +150,7 @@ jobs:
         run: |
           $repoName = $env:GITHUB_REPOSITORY.Split('/')[-1]
           Write-Host "Workflow succeeded for $repoName!"
-          dding "github action gtest success :) for $repoName"
+          dding "public_win_agent gtest success :) for $repoName"
           
 
       - name: Check Status
@@ -159,7 +159,7 @@ jobs:
         run: |
           $repoName = $env:GITHUB_REPOSITORY.Split('/')[-1]
           Write-Host "Workflow failed for $repoName!"
-          dding "github action gtest fail :( $repoName"
+          dding "public_win_agent gtest fail :( $repoName"
 
       - name: Ls dir
         run: |
